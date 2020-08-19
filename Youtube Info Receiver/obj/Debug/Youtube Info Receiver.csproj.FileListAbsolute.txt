@@ -1,0 +1,6 @@
+C:\Users\user\source\repos\Youtube Info Receiver\Youtube Info Receiver\bin\Debug\Youtube Info Receiver.dll
+C:\Users\user\source\repos\Youtube Info Receiver\Youtube Info Receiver\bin\Debug\Youtube Info Receiver.pdb
+C:\Users\user\source\repos\Youtube Info Receiver\Youtube Info Receiver\obj\Debug\Youtube Info Receiver.csprojAssemblyReference.cache
+C:\Users\user\source\repos\Youtube Info Receiver\Youtube Info Receiver\obj\Debug\Youtube Info Receiver.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\Youtube Info Receiver\Youtube Info Receiver\obj\Debug\Youtube Info Receiver.dll
+C:\Users\user\source\repos\Youtube Info Receiver\Youtube Info Receiver\obj\Debug\Youtube Info Receiver.pdb
