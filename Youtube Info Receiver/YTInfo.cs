@@ -22,13 +22,14 @@ namespace Youtube_Info_Receiver
                 Regex r = new Regex(@"#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#");
                 if (!r.IsMatch(url))
                 {
-                    throw new Exception("Geçersiz URL");
+                    throw new Exception("Geçersiz URL!");
                 }
 
                 WebClient wc = new WebClient();
                 string satir = wc.DownloadString(url);
 
                 bool getDesc = true;
+                bool noLike = false;
                 string str = satir;
                 string str2 = satir;
                 string str3 = satir;
@@ -37,13 +38,24 @@ namespace Youtube_Info_Receiver
                 string str6 = satir;
                 string str7 = satir;
 
+                if (satir.Contains("\"status\":\"ERROR\""))
+                {
+                    throw new Exception("Video bulunamadı!");
+                }
+
+                if (satir.Contains("LOGIN_REQUIRED"))
+                {
+                    throw new Exception("Bu video gizli.");
+                }
+
                 if (satir.Contains("\\\"shortDescription\\\":\\\"\\\",\\\""))
                 {
                     getDesc = false;
                 }
-                if (satir.Contains("\"status\":\"ERROR\""))
+
+                if (!satir.Contains("\"likeStatus\""))
                 {
-                    throw new Exception("Video bulunamadı");
+                    noLike = true;
                 }
 
                 int bul = str.IndexOf("<title>");
@@ -81,14 +93,17 @@ namespace Youtube_Info_Receiver
                     Aciklama = "N/A";
                 }
 
-                bul = str5.IndexOf("\"tooltip\":\"", str5.IndexOf("\"tooltip\":\"") + 1);
-                str5 = str5.Remove(0, bul);
-                str5 = str5.Remove(0, 11);
-                bul = str5.IndexOf("\"}},");
-                str5 = str5.Remove(bul, str5.Length - bul);
-                var ayir = str5.Split('/');
-                Like = double.Parse(ayir[0]);
-                Disslike = double.Parse(ayir[1]);
+                if (!noLike)
+                {
+                    bul = str5.IndexOf("\"tooltip\":\"", str5.IndexOf("\"tooltip\":\"") + 1);
+                    str5 = str5.Remove(0, bul);
+                    str5 = str5.Remove(0, 11);
+                    bul = str5.IndexOf("\"}},");
+                    str5 = str5.Remove(bul, str5.Length - bul);
+                    var ayir = str5.Split('/');
+                    Like = double.Parse(ayir[0]);
+                    Disslike = double.Parse(ayir[1]);
+                }
 
                 bul = str6.IndexOf("\"viewCount\\\":\\\"");
                 str6 = str6.Remove(0, bul);
@@ -174,6 +189,7 @@ namespace Youtube_Info_Receiver
                         .Replace("Å", "Ş")
                         .Replace("ÄŸ", "ğ")
                         .Replace("Ä", "Ğ")
+                        .Replace("Ş?", "Ş")
                         .Replace("&amp;", "&")
                         .Replace("&quot;", "\"")
                         .Replace("&#39;", "'")
