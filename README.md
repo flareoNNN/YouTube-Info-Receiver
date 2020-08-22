@@ -4,7 +4,7 @@
 # YouTube Info Receiver
 
 C# için yazılmış YouTube video bilgisi çekme kütüphanesi.<br>
-Versiyon: *1.0.0*
+Versiyon: *1.1.0*
 
 # Kurulum
 
